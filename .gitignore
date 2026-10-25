@@ -1,2 +1,5 @@
 # Dataset
 /Dataset/
+
+# Python Virtual Enviornment
+.venv/
