@@ -66,6 +66,8 @@ data/
 *.tar.gz
 *.zip
 
+Dataset/
+
 # Model weights & checkpoints
 models/
 *.pt
@@ -88,5 +90,6 @@ outputs/
 predictions/
 results/
 
+# Local MacOS folder metadata
 .DS_Store
 .DS_Store?
