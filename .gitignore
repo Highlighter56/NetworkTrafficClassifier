@@ -1,5 +1,5 @@
 # Dataset
-/Dataset/
+/data/
 
 # Python Virtual Enviornment
 .venv/
@@ -9,3 +9,5 @@ Implementation.md
 
 # Jupyter Notebooks
 /notebooks/
+
+src/__pycache__/
