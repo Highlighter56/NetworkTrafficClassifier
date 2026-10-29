@@ -13,7 +13,7 @@ dataframe_concat = pandas.concat(dataframe_list, ignore_index=True)
 dataframe_concat = dataframe_concat.reset_index(drop=True)
 print(dataframe_concat.head())
 
-small_df = dataframe_concat.groupby('Attack Name').sample(n=100, replace=True, random_state=42)
+small_df = dataframe_concat.groupby('Attack Name').sample(n=100, replace=False, random_state=42)
 small_df = small_df.reset_index(drop=True)
 
 print(small_df.shape)
