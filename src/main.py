@@ -68,15 +68,19 @@ def main():
 	# === Train Models on Specific Algorithms ===
 	print("Training Model")
 	model_lr = train_logistic_regression(x_train_scaled, y_train, 600)
-	
 	print("Model Trained")
+	
+	print("Testing Model")
+	
+	# === Test Model ===
+	modelPredictions = model_lr.predict(x_test_scaled)
 
 	#  ==== Validate Results ==== 
-	print("Testing Model")
-	# --- Test Model ---
-	modelPredictions = model_lr.predict(x_test_scaled)
+	print("Validate Results")
+
 	# --- Count Correct Predictions ---
 	correctPredictionCount = np.sum(y_test == modelPredictions)
+
 	# --- Calculate Percent Correct ---
 	accuracy = correctPredictionCount / modelPredictions.size
 	
@@ -100,6 +104,7 @@ def get_csv_file_path():
 	return path_b
 
 
+
 class SplitData:
 	def __init__(self, x_train, x_test, y_train, y_test):
 		self.x_train = x_train
@@ -108,19 +113,6 @@ class SplitData:
 		self.y_test = y_test
 
 
+
 if __name__ == "__main__":
 	main()
-
-
-
-'''
-Load the 15 cvs files
-
-split each one porportionaly
-
-conbign training and testing
-
-train
-
-validate
-'''
