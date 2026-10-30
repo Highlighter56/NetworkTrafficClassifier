@@ -25,6 +25,8 @@ python log_reg.py <location of csv files>
 python svm.py <location of csv files>
 ```
 
+---
+
 ### Problems loading the dataset?
 To ensure the data is loaded properly, either:
 
@@ -35,11 +37,14 @@ To ensure the data is loaded properly, either:
 #### Method 2
 
 * When running the program through terminal, specify the path into the folder where the csv files have been downloaded. 
-* Example: "../data/loose_csv/"
-* Example: 
+* Example: files located in "../data/loose_csv/"
 ```bash
 python log_reg.py ../data/loose_csv/
 ```
+### Missing modules in python environment?
+- requirements.txt is located in project root
+
+---
 
 #### Preliminary classifications of attack types:
  * Benign Traffic
