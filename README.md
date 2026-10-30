@@ -18,3 +18,18 @@ The goal of this project is to train a model that can identify network activity.
  * Recon Vulnerability Scan
 
 Our Dataset can be Downloaded from: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
+
+To ensure the data is loaded properly, either:
+
+### Method 1
+* Inside root, create a folder named data, then inside that another named loose_csv, and place all csv files there. 
+* When running the program through a terminal, do not add any cli arguments.
+
+### Method 2
+
+* When running the program through terminal, specify the path into the folder where the csv files have been downloaded. 
+* Example: "../data/loose_csv/"
+* Example: 
+```bash
+python log_reg.py ../data/loose_csv/
+```
