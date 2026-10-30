@@ -5,8 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-from create_df import create_df
-from train_logistic_regression import train_logistic_regression
+from in_progress.create_df import create_df
+from in_progress.train_logistic_regression import train_logistic_regression
 
 def main():
 	print("Starting Main")
