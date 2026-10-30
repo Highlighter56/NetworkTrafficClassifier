@@ -7,6 +7,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.model_selection import GridSearchCV
 
 from data_cleaning_ian import data_cleaning
 
@@ -35,12 +36,25 @@ selector = SelectKBest(score_func=f_classif, k=60)
 features_train_kbest = selector.fit_transform(features_train_scaled, target_train)
 features_test_kbest = selector.transform(features_test_scaled)
 
-# Train model
-svc = SVC(kernel='rbf', gamma='scale', C=20.0, class_weight='balanced', random_state=42)
-svc.fit(features_train_kbest, target_train)
+# Determine parameters and train model
+param_grid = {
+    'kernel': ['rbf'],
+    'C': [0.1, 1, 10, 100],
+    'gamma': ['scale', 'auto'],
+    'class_weight': [None, 'balanced'],
+}
+
+svc = SVC()
+grid_search = GridSearchCV(svc, param_grid)
+grid_search.fit(features_train_kbest, target_train)
+
+print("best parameters:")
+print(grid_search.best_params_)
+print("Best Cross-Validation Score:")
+print(grid_search.best_score_)
 
 # Evaluate Model
-target_prediction = svc.predict(features_test_kbest)
+target_prediction = grid_search.predict(features_test_kbest)
 print(f"Accuracy score: {accuracy_score(target_test, target_prediction):.4f}")
 print("Classification Report:")
 print(classification_report(target_test, target_prediction, zero_division=0))
