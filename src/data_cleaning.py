@@ -1,4 +1,5 @@
 # Python script for cleaning data files
+# Currently not used by model training and testing scripts
 import glob
 import pandas as pandas
 
