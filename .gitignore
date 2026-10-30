@@ -1,15 +1,95 @@
-# Dataset
-/data/
+# --- Python & Miniconda ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Python Virtual Enviornment
+# Virtual environments & Conda
 .venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.conda/
 
-# Notes Doc
-Implementation.md
+# --- PyCharm & IDEs ---
+.idea/
+*.iml
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
 
-# Jupyter Notebooks
-/notebooks/
+# --- Testing & Coverage ---
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+.cache/
 
-src/__pycache__/
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
 
-# /src/in_progress/
+# --- Machine Learning Artifacts & Data ---
+# Datasets (CSV, Parquet, JSON, images, archives)
+data/
+*.csv
+*.parquet
+*.json
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.tar.gz
+*.zip
+
+Dataset/
+
+# Model weights & checkpoints
+models/
+*.pt
+*.pth
+*.ckpt
+*.weights
+*.bin
+*.onnx
+
+# Logs, runs, and experiment tracking
+runs/
+logs/
+wandb/
+mlruns/
+tensorboard/
+*.log
+
+# Output predictions & generated files
+outputs/
+predictions/
+results/
+
+# Local MacOS folder metadata
+.DS_Store
+.DS_Store?
