@@ -1,19 +1,27 @@
 # Python script for cleaning data files
 import glob
+import sys
 import pandas as pandas
 
-def load_csv_data(csv_folder):
-    if csv_folder is None:
-        csv_folder = "../data/loose_csv/*.csv"
-    return glob.glob(csv_folder)
+def load_csv_data():
+	path = ""
+
+	if len(sys.argv) == 2:
+		path = sys.argv[1] + "*.csv"
+
+	if path == "":
+		path = "../data/loose_csv/*.csv"
+
+	return glob.glob(path)
 
 def sample_or_take_all(group):
     sample_size = min(len(group), 1000)
     return group.sample(n=sample_size, random_state=42)
 
-def data_cleaning(csv_folder=None):
+def data_cleaning():
     # Store the loose csv files into list
-    file_paths = load_csv_data(csv_folder)
+        
+    file_paths = load_csv_data()
 
     # Build a dataframe for each csv file and store in list
     dataframe_list = [pandas.read_csv(file) for file in file_paths]

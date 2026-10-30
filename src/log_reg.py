@@ -1,4 +1,5 @@
 # import numpy as np
+import sys
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -23,10 +24,13 @@ def train_logistic_regression(x_train, y_train, iter):
 
 def log_reg(): 
 	# === Loading, Cleaning, and Creating the Dataframe ===
+
+
 	print("Creating Dataframe")
 	df = data_cleaning_ian.data_cleaning()
 	print("Dataframe Created")
-
+	
+	# sys.exit(1)
 
 	# === Spliting Data ===
 	print("Assigning Inputs and Output")
