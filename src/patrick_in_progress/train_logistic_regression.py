@@ -14,5 +14,5 @@ def train_logistic_regression(x_train, y_train, iter):
 
 
 
-if __name__ == "main":
+if __name__ == "__main__":
 	train_logistic_regression()

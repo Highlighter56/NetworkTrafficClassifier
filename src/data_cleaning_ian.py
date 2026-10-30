@@ -2,6 +2,15 @@
 import glob
 import pandas as pandas
 
+def load_csv_data(csv_folder):
+    if csv_folder is None:
+        csv_folder = "../data/loose_csv/*.csv"
+    return glob.glob(csv_folder)
+
+def sample_or_take_all(group):
+    sample_size = min(len(group), 1000)
+    return group.sample(n=sample_size, random_state=42)
+
 def data_cleaning(csv_folder=None):
     # Store the loose csv files into list
     file_paths = load_csv_data(csv_folder)
@@ -38,11 +47,3 @@ def data_cleaning(csv_folder=None):
 
     return small_df
 
-def load_csv_data(csv_folder):
-    if csv_folder is None:
-        csv_folder = "../data/loose_csv/*.csv"
-    return glob.glob(csv_folder)
-
-def sample_or_take_all(group):
-    sample_size = min(len(group), 1000)
-    return group.sample(n=sample_size, random_state=42)

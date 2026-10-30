@@ -93,3 +93,17 @@ results/
 # Local MacOS folder metadata
 .DS_Store
 .DS_Store?
+
+
+
+# Notes Doc
+Implementation.md
+
+# Jupyter Notebooks
+/notebooks/Examples/
+/notebooks/motivation/
+/notebooks/originalDesign/
+
+src/__pycache__/
+
+# /src/patrick_in_progress/
