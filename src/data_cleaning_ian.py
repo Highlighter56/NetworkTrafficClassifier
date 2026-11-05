@@ -2,6 +2,8 @@
 import glob
 import sys
 import pandas as pandas
+import numpy as numpy
+from sklearn.model_selection import train_test_split
 
 def load_csv_data():
     path = ""
@@ -15,7 +17,7 @@ def load_csv_data():
     return glob.glob(path)
 
 def sample_or_take_all(group):
-    sample_size = min(len(group), 1000)
+    sample_size = min(len(group), 2000)
     return group.sample(n=sample_size, random_state=42)
 
 def data_cleaning():
@@ -52,6 +54,14 @@ def data_cleaning():
     # Sample from each Attack Name to build smaller model for training
     small_df = dataframe_filtered.groupby('Attack Name').apply(sample_or_take_all)
     small_df = small_df.reset_index(level=0)
+
+    # Separate target from features
+    targets = small_df['Attack Name']
+    features = small_df.select_dtypes(include=[numpy.number])
+
+    # Splitting off test data
+    # returns features_train, features_test, targets_train, targets_test
+    return train_test_split(features, targets, test_size=0.2, random_state=42)
 
     return small_df
 
