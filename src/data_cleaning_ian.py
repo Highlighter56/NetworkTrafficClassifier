@@ -5,16 +5,24 @@ import pandas as pandas
 import numpy as numpy
 from sklearn.model_selection import train_test_split
 
+
+# 
 def load_csv_data():
     path = ""
 
+	# If Entered a Custom Path
     if len(sys.argv) == 2:
-        path = sys.argv[1] + "*.csv"
+        return glob.glob(sys.argv[1] + "*.csv")
 
-    if path == "":
-        path = "../data/loose_csv/*.csv"
+	# If Entered no Path
+    # If running from scr
+    file_pathsA = glob.glob("../data/loose_csv/*.csv")
+    if len(file_pathsA) == 15:
+          return file_pathsA
+    # If running from root
+    return glob.glob("data/loose_csv/*.csv")
 
-    return glob.glob(path)
+	
 
 def sample_or_take_all(group):
     sample_size = min(len(group), 2000)
@@ -22,8 +30,12 @@ def sample_or_take_all(group):
 
 def data_cleaning():
     # Store the loose csv files into list
-        
+
     file_paths = load_csv_data()
+
+	# Testing you can run from src, root, or a custome destination provided you specify where the data is
+    # print("File Path Size:",len(file_paths))
+    # sys.exit(1)
 
     # Build a dataframe for each csv file and store in list
     dataframe_list = [pandas.read_csv(file) for file in file_paths]
@@ -60,12 +72,11 @@ def data_cleaning():
     # Removes any Strings from the Dataset (Including Attack Name, Flow ID,...)
     features = small_df.select_dtypes(include=[numpy.number])
 
-	# Drops Label (classifies a row as either benign or an attack)
+    # Drops Label (derived feature that classifies a row as either benign or an attack)
     features = features.drop(columns = ["Label"])
-    
-	# Splitting off test data
+
+    # Splitting off test data
     # returns features_train, features_test, targets_train, targets_test
     return train_test_split(features, targets, test_size=0.2, random_state=42)
 
-    return small_df
-
+    # return small_df

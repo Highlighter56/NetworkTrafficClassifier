@@ -24,47 +24,10 @@ def train_logistic_regression(x_train, y_train, iter):
 
 def log_reg(): 
 	# === Loading, Cleaning, and Creating the Dataframe ===
-
-
 	print("Creating Dataframe")
-	df = data_cleaning_ian.data_cleaning()
-	print("Dataframe Created")
-	
-	# sys.exit(1)
-
-	# === Spliting Data ===
 	print("Assigning Inputs and Output")
-
-	# --- Input ---
-	x = df.drop(
-		columns = [
-			"Attack Name", 
-			"Label",
-			"Flow ID",
-			"Src IP",
-			"Dst IP",
-			"Timestamp"
-		]
-	)
-	# print(x.head())
-	'''Logistic Regression doesnt like Strinsg, so in addition
-	to dropping output values, we need to drop strings.
-	IP values may apply to these collected pieces of data,
-	but in general they dont so should be dropped, same for time
-	'''
-
-	# --- Output ---
-	y = df["Attack Name"]
-	# print(y.head())
-
 	print("Splitting Training and Testing Data")
-	x_train, x_test, y_train, y_test = train_test_split(
-		x,
-		y,
-		test_size=.2,
-		random_state=42,
-		stratify=y
-	)
+	x_train, x_test, y_train, y_test = data_cleaning_ian.data_cleaning()
 
 	# --- Standardization of X ---
 	print("Standardizing Inputs")
@@ -76,7 +39,7 @@ def log_reg():
 	# === Train Models on Specific Algorithms ===
 	print("Training Model")
 	model_lr = train_logistic_regression(x_train_scaled, y_train, 1000)
-	print("Model Trained")
+	# print("Model Trained")
 
 	# === Test Model ===
 	print("Testing Model")
@@ -84,7 +47,7 @@ def log_reg():
 
 
 	# === Validate Model Predictions ===
-	print("===Evaluating Model===")
+	print("======Evaluating Model======")
 
 	# Evaluate the model
 	model_accuracy = accuracy_score(y_test, model_predictions)
