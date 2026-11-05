@@ -57,9 +57,13 @@ def data_cleaning():
 
     # Separate target from features
     targets = small_df['Attack Name']
+    # Removes any Strings from the Dataset (Including Attack Name, Flow ID,...)
     features = small_df.select_dtypes(include=[numpy.number])
 
-    # Splitting off test data
+	# Drops Label (classifies a row as either benign or an attack)
+    features = features.drop(columns = ["Label"])
+    
+	# Splitting off test data
     # returns features_train, features_test, targets_train, targets_test
     return train_test_split(features, targets, test_size=0.2, random_state=42)
 
