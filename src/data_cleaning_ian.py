@@ -4,15 +4,15 @@ import sys
 import pandas as pandas
 
 def load_csv_data():
-	path = ""
+    path = ""
 
-	if len(sys.argv) == 2:
-		path = sys.argv[1] + "*.csv"
+    if len(sys.argv) == 2:
+        path = sys.argv[1] + "*.csv"
 
-	if path == "":
-		path = "../data/loose_csv/*.csv"
+    if path == "":
+        path = "../data/loose_csv/*.csv"
 
-	return glob.glob(path)
+    return glob.glob(path)
 
 def sample_or_take_all(group):
     sample_size = min(len(group), 1000)
