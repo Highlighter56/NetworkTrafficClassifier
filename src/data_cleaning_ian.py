@@ -10,19 +10,18 @@ from sklearn.model_selection import train_test_split
 def load_csv_data():
     path = ""
 
-	# If Entered a Custom Path
+	# If entered a custom path
     if len(sys.argv) == 2:
         return glob.glob(sys.argv[1] + "*.csv")
 
 	# If Entered no Path
     # If running from scr
-    file_pathsA = glob.glob("../data/source_data/*.csv")
+    file_pathsA = glob.glob("../data/raw_data/*.csv")
     if len(file_pathsA) == 15:
           return file_pathsA
     # If running from root
-    return glob.glob("data/source_data/*.csv")
+    return glob.glob("data/raw_data/*.csv")
 
-	
 
 def sample_or_take_all(group):
     sample_size = min(len(group), 2000)

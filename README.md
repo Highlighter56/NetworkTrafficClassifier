@@ -9,8 +9,8 @@ Our Dataset can be Downloaded from: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-202
 This repo contains two machine learning models: SVM found in src/svm.py and Logistic Regression found in src/log_reg.py.
 - Clone the repo
 - Download the dataset: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
-- *(Optional)* Inside root, create a folder named data, then inside that another named loose_csv, and place all csv files there. 
-- If dataset .csv files are in data/loose_csv/, run from src:
+- *(Optional)* Inside root, create a folder named data, then inside that another named raw_data, and place all csv files there. 
+- If dataset .csv files are in data/raw_data/, run from src:
 ```console
 python log_reg.py
 ```
@@ -31,15 +31,15 @@ python svm.py <location of csv files>
 To ensure the data is loaded properly, either:
 
 #### Method 1
-* Inside root, create a folder named data, then inside that another named loose_csv, and place all csv files there. 
+* Inside root, create a folder named data, then inside that another named raw_data, and place all csv files there. 
 * When running the program through a terminal, do not add any cli arguments.
 
 #### Method 2
 
 * When running the program through terminal, specify the path into the folder where the csv files have been downloaded. 
-* Example: files located in "../data/loose_csv/"
+* Example: files located in "../data/raw_data/"
 ```bash
-python log_reg.py ../data/loose_csv/
+python log_reg.py ../data/raw_data/
 ```
 ### Missing modules in python environment?
 - requirements.txt is located in project root
