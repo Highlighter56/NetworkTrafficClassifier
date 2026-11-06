@@ -100,37 +100,44 @@ def main():
 	PLACE_HOLDER_model = ""
 	
 	# --- Load / Train Models ---
-	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr)
-	svm_model = load_train_model(x_test_scaled, y_test, path + svm)
+	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
+	# svm_model = load_train_model(x_test_scaled, y_test, path + svm) # !!! Modify svm.py to be a method, so it can be passes as a function
+	# dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tree)
+	# PLACE_HOLDER_model = load_train_model(x_test, y_test, path + dt, PLACE_HOLDER)
 
 	# =========== Model Validation ===========
 	print("====== Model Results =======")
 
 	# ----- Logistic Regression ---
 	print("\n\n--- Logistic Regression Results ---")
-	log_reg_results = mr.Model_Results(log_reg_model, x_test_scaled, y_test)
-	print("Accuracy:",log_reg_results.get_accuracy())
-	print("Model Report:",log_reg_results.get_model_report())
-	log_reg_results.display_confusion_matrix_data()
+	log_reg_results = mr.Model_Results(log_reg_model, x_test_scaled, y_test, "Logistic Regression")
+	display_results(log_reg_results)
 
 	# ----- SVM -----
 	print("\n\n--- SVM Results ---")
-	svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test)
-	print("Accuracy:",svm_results.get_accuracy())
-	print("Model Report:",svm_results.get_model_report())
-	svm_results.display_confusion_matrix_data()
+	# svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
+	# display_results(svm_results)
 
 	# ----- Decission Tree -----
 	print("\n\n--- Decission Tree Results ---")
+	# dec_tree_results = mr.Model_Results(dec_tree_results, x_test, y_test, "Decission Tree")
+	# display_results(dec_tree_results)
 
 	# ----- PLACE_HOLDER -----
 	print("\n\n--- PLACE_HOLDER Results ---")
+	# PLACE_HOLDER_results = mr.Model_Results(PLACE_HOLDER_results, x_test, y_test, "PLACE_HOLDER")
+	# display_results(PLACE_HOLDER_results)
 
 
 
 	print("=========== Done ===========")
 
-def load_train_model(x_train, y_train, path):
+def display_results(model):
+	print("Accuracy:",model.get_accuracy())
+	print("Model Report:",model.get_model_report())
+	model.display_confusion_matrix_data()
+
+def load_train_model(x_train, y_train, path, training_function):
 	# If a Trained Model is Stored
 	if Path(path).exists():
 		print("Model Exists")
@@ -140,7 +147,7 @@ def load_train_model(x_train, y_train, path):
 	# If a Model needs to be Trained and Stored
 	print("Model does not Exists")
 	print("Training Model")
-	return log_reg(x_train, y_train, path)
+	return training_function(x_train, y_train, path)
 	
 
 

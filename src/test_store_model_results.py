@@ -9,11 +9,12 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 
 class Model_Results:
 	# Constructor
-	def __init__(self, trained_model, x_test, y_test):
+	def __init__(self, trained_model, x_test, y_test, title):
 		# Saving the Input Parameters
 		self.model = trained_model
 		self.x_test_scaled = x_test
 		self.y_test = y_test
+		self.title = title
 
 		# Intermidiate Calculations
 		self.model_predictions = self._test_model(trained_model, x_test)
@@ -50,7 +51,7 @@ class Model_Results:
 			cmap=plt.cm.Blues
 		)
 
-		ax.set_title("Logistic Regression Confusion Matrix")
+		ax.set_title(self.title + " Confusion Matrix")
 		fig.tight_layout()
 
 		plt.show()
