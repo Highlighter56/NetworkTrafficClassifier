@@ -1,4 +1,5 @@
 
+# import libraries 
 from pathlib import Path
 import sys
 import glob
@@ -6,11 +7,16 @@ import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler
 
-
-# from log_reg import log_reg
+# import data loading/cleaning and model evaluation
 from data_cleaning import data_cleaning
-from log_reg import log_reg
 import test_store_model_results as mr
+
+# import training algorithms
+from log_reg import log_reg
+from dec_tre import dec_tre
+# from svm import svm
+# from PLACE_HOLDER import PLACE_HOLDER
+
 
 def main():
 
@@ -89,9 +95,9 @@ def main():
 
 	# Model File Names
 	lr = "log_reg_model.pkl"
-	svm = "svm_model.plk"
-	dt = "dec_tre.plk"
-	PLACE_HOLDER = "PLACE_HOLDER.plk"
+	dt = "dec_tre.pkl"
+	svm = "svm_model.pkl"
+	PLACE_HOLDER = "PLACE_HOLDER.pkl"
 
 	# Instantiating model variables
 	log_reg_model = ""
@@ -101,8 +107,8 @@ def main():
 	
 	# --- Load / Train Models ---
 	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
+	dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tre)
 	# svm_model = load_train_model(x_test_scaled, y_test, path + svm) # !!! Modify svm.py to be a method, so it can be passes as a function
-	# dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tree)
 	# PLACE_HOLDER_model = load_train_model(x_test, y_test, path + dt, PLACE_HOLDER)
 
 	# =========== Model Validation ===========
@@ -113,15 +119,15 @@ def main():
 	log_reg_results = mr.Model_Results(log_reg_model, x_test_scaled, y_test, "Logistic Regression")
 	display_results(log_reg_results)
 
+	# ----- Decission Tree -----
+	print("\n\n--- Decission Tree Results ---")
+	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decission Tree")
+	display_results(dec_tree_results)
+	
 	# ----- SVM -----
 	print("\n\n--- SVM Results ---")
 	# svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
 	# display_results(svm_results)
-
-	# ----- Decission Tree -----
-	print("\n\n--- Decission Tree Results ---")
-	# dec_tree_results = mr.Model_Results(dec_tree_results, x_test, y_test, "Decission Tree")
-	# display_results(dec_tree_results)
 
 	# ----- PLACE_HOLDER -----
 	print("\n\n--- PLACE_HOLDER Results ---")

@@ -61,7 +61,7 @@ data/
 *.json
 *.h5
 *.hdf5
-*.pkl
+# *.pkl
 *.pickle
 *.tar.gz
 *.zip
