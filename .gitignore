@@ -69,7 +69,7 @@ data/
 Dataset/
 
 # Model weights & checkpoints
-models/
+# models/
 *.pt
 *.pth
 *.ckpt
@@ -106,4 +106,4 @@ Implementation.md
 
 src/__pycache__/
 
-# /src/patrick_in_progress/
+/src/patrick_in_progress/

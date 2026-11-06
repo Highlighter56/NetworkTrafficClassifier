@@ -1,73 +1,30 @@
-# import numpy as np
-# import sys
+
 from sklearn.linear_model import LogisticRegression
-# from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
-# Model Validation
-import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
-
-# from train_logistic_regression import train_logistic_regression
-# from data_cleaning_ian import data_cleaning
-import data_cleaning_ian
+import pickle
 
 
-def train_logistic_regression(x_train, y_train, iter):
-	# Instantiate Model
+
+
+def log_reg(x_train_scaled, y_train, path): 
+
+
+	# --- Instantiate Model ---
+	print("Training Logistic Regression Model")
+
 	logistic_regression = LogisticRegression(
-		random_state=42,
-		max_iter = iter
-	)
+			random_state=42,
+			max_iter = 1000
+		)
+	
+	# --- Train Model ---
+	model_lr = logistic_regression.fit(x_train_scaled, y_train)
 
-	# Train Model
-	model = logistic_regression.fit(x_train, y_train)
-	return model
+	# --- Store Model ---
+	print("Storing Model")
+	with open(path, "wb") as file:
+		pickle.dump(model_lr, file)
 
-def log_reg(): 
-	# === Loading, Cleaning, and Creating the Dataframe ===
-	print("Creating Dataframe")
-	print("Assigning Inputs and Output")
-	print("Splitting Training and Testing Data")
-	x_train, x_test, y_train, y_test = data_cleaning_ian.data_cleaning()
-
-	# --- Standardization of X ---
-	print("Standardizing Inputs")
-	scaler = StandardScaler()
-	x_train_scaled = scaler.fit_transform(x_train)
-	x_test_scaled = scaler.transform(x_test)
-
-
-	# === Train Models on Specific Algorithms ===
-	print("Training Model")
-	model_lr = train_logistic_regression(x_train_scaled, y_train, 1000)
-	# print("Model Trained")
-
-	# === Test Model ===
-	print("Testing Model")
-	model_predictions = model_lr.predict(x_test_scaled)
-
-
-	# === Validate Model Predictions ===
-	print("======Evaluating Model======")
-
-	# Evaluate the model
-	model_accuracy = accuracy_score(y_test, model_predictions)
-	model_report = classification_report(y_test, model_predictions, zero_division=0)
-	print(f"Accuracy score: {model_accuracy:.4f}")
-	print("Classification Report:")
-	print(model_report)
-
-	# === Confusion Matrix ===
-
-	cm = confusion_matrix(y_test, model_predictions)
-
-	fig, ax = plt.subplots(figsize=(10, 10))
-	disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model_lr.classes_)
-	disp.plot(ax=ax, xticks_rotation='vertical', cmap=plt.cm.Blues)
-	plt.title("Logistic Regression Confusion Matrix")
-	plt.tight_layout()
-	plt.show()
+	return model_lr
 
 
 

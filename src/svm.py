@@ -9,7 +9,7 @@ from sklearn.feature_selection import VarianceThreshold
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.model_selection import GridSearchCV
 
-from data_cleaning_ian import data_cleaning
+from data_cleaning import data_cleaning
 
 # Load cleaned dataframe
 small_df = data_cleaning()

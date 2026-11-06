@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 
 
 
-class Model_Test:
+class Model_Results:
 	# Constructor
 	def __init__(self, trained_model, x_test, y_test):
 		# Saving the Input Parameters
