@@ -1,9 +1,11 @@
 # import numpy as np
-import sys
-import matplotlib.pyplot as plt
+# import sys
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+# Model Validation
+import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
 # from train_logistic_regression import train_logistic_regression

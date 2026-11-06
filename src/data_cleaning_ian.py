@@ -16,11 +16,11 @@ def load_csv_data():
 
 	# If Entered no Path
     # If running from scr
-    file_pathsA = glob.glob("../data/loose_csv/*.csv")
+    file_pathsA = glob.glob("../data/source_data/*.csv")
     if len(file_pathsA) == 15:
           return file_pathsA
     # If running from root
-    return glob.glob("data/loose_csv/*.csv")
+    return glob.glob("data/source_data/*.csv")
 
 	
 
