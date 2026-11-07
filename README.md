@@ -6,23 +6,29 @@ The goal of this project is to train a model that can identify the type of malic
 Our Dataset can be Downloaded from: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
 
 ### How to Run
-This repo contains two machine learning models: SVM found in src/svm.py and Logistic Regression found in src/log_reg.py.
+This repo contains two machine learning models: Decision Tree and Logistic Regression.
 - Clone the repo
 - Download the dataset: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
-- *(Optional)* Inside root, create a folder named data, then inside that another named raw_data, and place all csv files there. 
-- If dataset .csv files are in data/raw_data/, run from src:
+- *(Optional)* Inside root, create a folder named `data`, then inside that another named `raw_data`, and place all CSV files there.
+- Run from the project root:
 ```console
-python log_reg.py
+python src/main.py
 ```
+To force cleaned data and models to be regenerated:
 ```console
-python svm.py
+python src/main.py -i
 ```
-- If dataset is located somewhere else, run from src:
+The same command works from inside `src`:
 ```console
-python log_reg.py <location of csv files>
+python main.py
 ```
+If the dataset is located elsewhere, provide its raw-data directory:
 ```console
-python svm.py <location of csv files>
+python src/main.py C:\path\to\raw_data
+```
+Add `-i` to force regeneration with a custom directory:
+```console
+python src/main.py -i C:\path\to\raw_data
 ```
 
 ---
@@ -31,15 +37,15 @@ python svm.py <location of csv files>
 To ensure the data is loaded properly, either:
 
 #### Method 1
-* Inside root, create a folder named data, then inside that another named raw_data, and place all csv files there. 
-* When running the program through a terminal, do not add any cli arguments.
+* Inside root, create a folder named `data`, then inside that another named `raw_data`, and place all CSV files there.
+* Run `python src/main.py` from the project root or `python main.py` from `src`.
 
 #### Method 2
 
-* When running the program through terminal, specify the path into the folder where the csv files have been downloaded. 
-* Example: files located in "../data/raw_data/"
+* Specify the path into the folder where the CSV files have been downloaded.
+* Example:
 ```bash
-python log_reg.py ../data/raw_data/
+python src/main.py C:\data\raw_data
 ```
 ### Missing modules in python environment?
 - requirements.txt is located in project root

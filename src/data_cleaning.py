@@ -6,31 +6,14 @@ import numpy as numpy
 from sklearn.model_selection import train_test_split
 
 
-# 
-def load_csv_data():
-    path = ""
-
-	# If entered a custom path
-    if len(sys.argv) == 2:
-        return glob.glob(sys.argv[1] + "*.csv")
-
-	# If Entered no Path
-    # If running from scr
-    file_pathsA = glob.glob("../data/raw_data/*.csv")
-    if len(file_pathsA) == 15:
-          return file_pathsA
-    # If running from root
-    return glob.glob("data/raw_data/*.csv")
-
 
 def sample_or_take_all(group):
     sample_size = min(len(group), 2000)
     return group.sample(n=sample_size, random_state=42)
 
-def data_cleaning():
-    # Store the loose csv files into list
+def data_cleaning(raw_data_path):
 
-    file_paths = load_csv_data()
+    file_paths = glob.glob(raw_data_path)
 
 	# Testing you can run from src, root, or a custome destination provided you specify where the data is
     # print("File Path Size:",len(file_paths))
