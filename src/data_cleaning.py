@@ -50,17 +50,21 @@ def data_cleaning():
     dataframe_filtered_rps = dataframe_combined[dataframe_combined['Attack Name'] != 'Recon Ping Sweep']
     dataframe_filtered = dataframe_filtered_rps[dataframe_filtered_rps['Attack Name'] != 'MITM ARP Spoofing'].copy()
 
-    attack_mapping = {
-        'DDoS UDP Flood': 'UDP Flood',
-        'DoS UDP Flood': 'UDP Flood',
-        'DDoS ICMP Flood': 'ICMP Flood',
-        'DoS ICMP Flood': 'ICMP Flood',
-        'Recon OS Scan': 'Recon Scan',
-        'Recon Port Scan': 'Recon Scan',
-        'Recon Vulnerability Scan': 'Recon Scan'
-    }
 
-    dataframe_filtered['Attack Name'] = dataframe_filtered['Attack Name'].replace(attack_mapping)
+	# Gropuing Attack Types for Better
+    # attack_mapping = {
+    #     'DDoS UDP Flood': 'UDP Flood',
+    #     'DoS UDP Flood': 'UDP Flood',
+    #     'DDoS ICMP Flood': 'ICMP Flood',
+    #     'DoS ICMP Flood': 'ICMP Flood',
+    #     'Recon OS Scan': 'Recon Scan',
+    #     'Recon Port Scan': 'Recon Scan',
+    #     'Recon Vulnerability Scan': 'Recon Scan'
+    # }
+
+    # dataframe_filtered['Attack Name'] = dataframe_filtered['Attack Name'].replace(attack_mapping)
+
+
 
     # Sample from each Attack Name to build smaller model for training
     small_df = dataframe_filtered.groupby('Attack Name').apply(sample_or_take_all)

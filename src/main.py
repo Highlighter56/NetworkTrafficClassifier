@@ -12,8 +12,8 @@ from data_cleaning import data_cleaning
 import test_store_model_results as mr
 
 # import training algorithms
-from log_reg import log_reg
-from dec_tre import dec_tre
+from training_algorithms.log_reg import log_reg
+from training_algorithms.dec_tre import dec_tre
 # from svm import svm
 # from PLACE_HOLDER import PLACE_HOLDER
 
