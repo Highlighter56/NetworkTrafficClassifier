@@ -78,6 +78,7 @@ Dataset/
 *.onnx
 
 # Logs, runs, and experiment tracking
+validation_reports/
 runs/
 logs/
 wandb/
