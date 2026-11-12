@@ -14,8 +14,8 @@ import test_store_model_results as mr
 # import training algorithms
 from training_algorithms.log_reg import log_reg
 from training_algorithms.dec_tre import dec_tre
-# from svm import svm
-# from PLACE_HOLDER import PLACE_HOLDER
+from training_algorithms.svm import svm
+from training_algorithms.random_forest import random_forest
 
 
 def main():
@@ -97,19 +97,19 @@ def main():
 	lr = "log_reg_model.pkl"
 	dt = "dec_tre.pkl"
 	svm = "svm_model.pkl"
-	PLACE_HOLDER = "PLACE_HOLDER.pkl"
+	rnd_for = "rnd_for_model.pkl"
 
 	# Instantiating model variables
 	log_reg_model = ""
 	svm_model = ""
 	dt_model = ""
-	PLACE_HOLDER_model = ""
+	rnd_for_model = ""
 	
 	# --- Load / Train Models ---
 	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
 	dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tre)
-	# svm_model = load_train_model(x_test_scaled, y_test, path + svm) # !!! Modify svm.py to be a method, so it can be passes as a function
-	# PLACE_HOLDER_model = load_train_model(x_test, y_test, path + dt, PLACE_HOLDER)
+	svm_model = load_train_model(x_test_scaled, y_test, path + svm, svm)
+	rnd_for_model = load_train_model(x_test, y_test, path + rnd_for, random_forest)
 
 	# =========== Model Validation ===========
 	print("====== Model Results =======")
@@ -126,13 +126,13 @@ def main():
 	
 	# ----- SVM -----
 	print("\n\n--- SVM Results ---")
-	# svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
-	# display_results(svm_results)
+	svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
+	display_results(svm_results)
 
-	# ----- PLACE_HOLDER -----
+	# ----- Random Forest -----
 	print("\n\n--- PLACE_HOLDER Results ---")
-	# PLACE_HOLDER_results = mr.Model_Results(PLACE_HOLDER_results, x_test, y_test, "PLACE_HOLDER")
-	# display_results(PLACE_HOLDER_results)
+	rnd_for_results = mr.Model_Results(rnd_for_model, x_test, y_test, "Random Forest")
+	display_results(rnd_for_results)
 
 
 

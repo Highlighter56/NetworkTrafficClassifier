@@ -16,7 +16,7 @@ class Model_Results:
 		self.y_test = y_test
 		self.title = title
 
-		# Intermidiate Calculations
+		# Intermediate Calculations
 		self.model_predictions = self._test_model(trained_model, x_test)
 
 		# Final Desired Results
