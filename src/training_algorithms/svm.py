@@ -14,7 +14,7 @@ def svm(x_train, y_train, path):
         kernel='rbf',
         C=100,
         gamma='auto',
-        class_weight='None',
+        class_weight=None,
     )
 
     # Train Model
