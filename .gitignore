@@ -69,7 +69,7 @@ data/
 Dataset/
 
 # Model weights & checkpoints
-# models/
+models/
 *.pt
 *.pth
 *.ckpt

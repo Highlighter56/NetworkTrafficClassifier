@@ -6,6 +6,8 @@ import glob
 import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import recall_score
+from sklearn.feature_selection import SelectKBest, f_classif
 
 # import data loading/cleaning and model evaluation
 from data_cleaning import data_cleaning
@@ -26,7 +28,6 @@ def main():
 	print("Checking if Cleaned Data Exists")
 
 	# ----- Building Path -----
-	path_data = ""
 	path = ""
 
 	# If Entered too many args
@@ -39,18 +40,18 @@ def main():
 	
 	# If Entered a custom path
 	elif len(sys.argv) == 2:
-		path_data = sys.argv[1] + "../cleaned_data"
+		path = sys.argv[1] + "../cleaned_data"
 	# If no args entered
 	else: 
 		# If running from inside src
 		file_pathsA = glob.glob("../data/raw_data/*.csv")
 		if len(file_pathsA) == 15:
-			path_data = "../data/cleaned_data"
+			path = "../data/cleaned_data"
 		# If running from root
 		else:
-			path_data = "data/cleaned_data"
+			path = "data/cleaned_data"
 
-	cleaned_folder_path = Path(path_data)
+	cleaned_folder_path = Path(path)
 
 
 	# ----- If Cleaned Data Exists -----
@@ -58,10 +59,10 @@ def main():
 
 	if cleaned_folder_path.is_dir():
 		print("Cleaned Data Exists, Loading...")
-		x_train = pd.read_csv(path_data+"/x_train.csv")
-		x_test = pd.read_csv(path_data+"/x_test.csv")
-		y_train = pd.read_csv(path_data+"/y_train.csv")
-		y_test = pd.read_csv(path_data+"/y_test.csv")
+		x_train = pd.read_csv(path+"/x_train.csv")
+		x_test = pd.read_csv(path+"/x_test.csv")
+		y_train = pd.read_csv(path+"/y_train.csv")
+		y_test = pd.read_csv(path+"/y_test.csv")
 
 	# ----- If No Cleaned Data Exists -----
 	else: 
@@ -73,12 +74,16 @@ def main():
 		x_train, x_test, y_train, y_test = data_cleaning()
 
 		# Store DF's as files in cleaned_data
-		x_train.to_csv(path_data+"/x_train.csv", index=False)
-		x_test.to_csv(path_data+"/x_test.csv", index=False)
-		y_train.to_csv(path_data+"/y_train.csv", index=False)
-		y_test.to_csv(path_data+"/y_test.csv", index=False)
+		x_train.to_csv(path+"/x_train.csv", index=False)
+		x_test.to_csv(path+"/x_test.csv", index=False)
+		y_train.to_csv(path+"/y_train.csv", index=False)
+		y_test.to_csv(path+"/y_test.csv", index=False)
 
 	print("Data Loaded")
+
+	# --- Outputs are converted from Dataframes into Arrays ---
+	# y_train = y_train.squeeze()
+	# y_test = y_test.squeeze()
 
 
 	# ----- Standardization of X for models that need it -----
@@ -87,6 +92,11 @@ def main():
 	x_train_scaled = scaler.fit_transform(x_train)
 	x_test_scaled = scaler.transform(x_test)
 
+	# ----- Data preprocessing unique to SVM -----
+    # Select kbest features, dropping number of features to 60
+	selector = SelectKBest(score_func=f_classif, k=60)
+	X_train_kbest = selector.fit_transform(x_train_scaled, y_train)
+	X_test_kbest = selector.transform(x_test_scaled)
 
 	# =========== Building/Getting Models ===========
 
@@ -97,20 +107,20 @@ def main():
 	# Model File Names
 	lr = "log_reg_model.pkl"
 	dt = "dec_tre.pkl"
-	svm_filename = "svm_model.pkl"
+	svm_path = "svm_model.pkl"
 	rnd_for = "rnd_for_model.pkl"
 
 	# Instantiating model variables
 	log_reg_model = ""
 	svm_model = ""
-	dt_model = ""
+	dec_tre_model = ""
 	rnd_for_model = ""
 	
 	# --- Load / Train Models ---
-	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
-	dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tre)
-	svm_model = load_train_model(x_test_scaled, y_test, path + svm_filename, svm)
-	rnd_for_model = load_train_model(x_test, y_test, path + rnd_for, random_forest)
+	log_reg_model = load_train_model(x_train_scaled, y_train, path + lr, log_reg)
+	dec_tre_model = load_train_model(x_train, y_train, path + dt, dec_tre)
+	svm_model = load_train_model(X_train_kbest, y_train, path + svm_path, svm)
+	rnd_for_model = load_train_model(x_train, y_train, path + rnd_for, random_forest)
 
 	# =========== Model Validation ===========
 	print("====== Model Results =======")
@@ -122,12 +132,12 @@ def main():
 
 	# ----- Decission Tree -----
 	print("\n\n--- Decission Tree Results ---")
-	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decission Tree")
+	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decision Tree")
 	display_results(dec_tree_results)
 	
 	# ----- SVM -----
 	print("\n\n--- SVM Results ---")
-	svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
+	svm_results = mr.Model_Results(svm_model, X_test_kbest, y_test, "SVM")
 	display_results(svm_results)
 
 	# ----- Random Forest -----
@@ -141,7 +151,7 @@ def main():
 
 def display_results(model):
 	print("Accuracy:",model.get_accuracy())
-	print("Model Report:",model.get_model_report())
+	print("Model Report:\n"+model.get_model_report())
 	model.display_confusion_matrix_data()
 
 def load_train_model(x_train, y_train, path, training_function):

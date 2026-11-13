@@ -43,8 +43,14 @@ def data_cleaning():
     dataframe_combined = pandas.concat(dataframe_list, ignore_index=True)
     dataframe_combined = dataframe_combined.reset_index(drop=True)
 
+    # print("Shape No Drop: ",dataframe_combined.shape)
+    # sys.exit(1)
+    
     # Drop rows will null values
     dataframe_combined.dropna()
+    
+    # print("Shape With Drop: ",dataframe_combined.shape)
+    # sys.exit(1)
 
     # Drop problematic Attack Names
     dataframe_filtered_rps = dataframe_combined[dataframe_combined['Attack Name'] != 'Recon Ping Sweep']
@@ -83,3 +89,6 @@ def data_cleaning():
     return train_test_split(features, targets, test_size=0.2, random_state=42)
 
     # return small_df
+    
+if __name__ == "__main__":
+    data_cleaning()
