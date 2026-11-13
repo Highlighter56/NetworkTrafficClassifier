@@ -7,6 +7,7 @@ import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import recall_score
+from sklearn.feature_selection import SelectKBest, f_classif
 
 # import data loading/cleaning and model evaluation
 from data_cleaning import data_cleaning
@@ -80,6 +81,10 @@ def main():
 
 	print("Data Loaded")
 
+	# --- Outputs are converted from Dataframes into Arrays ---
+	# y_train = y_train.squeeze()
+	# y_test = y_test.squeeze()
+
 
 	# ----- Standardization of X for models that need it -----
 	print("Standardizing Inputs")
@@ -87,6 +92,11 @@ def main():
 	x_train_scaled = scaler.fit_transform(x_train)
 	x_test_scaled = scaler.transform(x_test)
 
+	# ----- Data preprocessing unique to SVM -----
+    # Select kbest features, dropping number of features to 60
+	selector = SelectKBest(score_func=f_classif, k=60)
+	X_train_kbest = selector.fit_transform(x_train_scaled, y_train)
+	X_test_kbest = selector.transform(x_test_scaled)
 
 	# =========== Building/Getting Models ===========
 
@@ -97,20 +107,20 @@ def main():
 	# Model File Names
 	lr = "log_reg_model.pkl"
 	dt = "dec_tre.pkl"
-	svm = "svm_model.pkl"
+	svm_path = "svm_model.pkl"
 	rnd_for = "rnd_for_model.pkl"
 
 	# Instantiating model variables
 	log_reg_model = ""
 	svm_model = ""
-	dt_model = ""
+	dec_tre_model = ""
 	rnd_for_model = ""
 	
 	# --- Load / Train Models ---
-	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
-	dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tre)
-	svm_model = load_train_model(x_test_scaled, y_test, path + svm, svm)
-	rnd_for_model = load_train_model(x_test, y_test, path + rnd_for, random_forest)
+	log_reg_model = load_train_model(x_train_scaled, y_train, path + lr, log_reg)
+	dec_tre_model = load_train_model(x_train, y_train, path + dt, dec_tre)
+	svm_model = load_train_model(X_train_kbest, y_train, path + svm_path, svm)
+	rnd_for_model = load_train_model(x_train, y_train, path + rnd_for, random_forest)
 
 	# =========== Model Validation ===========
 	print("====== Model Results =======")
@@ -122,16 +132,16 @@ def main():
 
 	# ----- Decission Tree -----
 	print("\n\n--- Decission Tree Results ---")
-	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decission Tree")
+	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decision Tree")
 	display_results(dec_tree_results)
 	
 	# ----- SVM -----
 	print("\n\n--- SVM Results ---")
-	svm_results = mr.Model_Results(svm_model, x_test_scaled, y_test, "SVM")
+	svm_results = mr.Model_Results(svm_model, X_test_kbest, y_test, "SVM")
 	display_results(svm_results)
 
 	# ----- Random Forest -----
-	print("\n\n--- PLACE_HOLDER Results ---")
+	print("\n\n--- Random Forest Results ---")
 	rnd_for_results = mr.Model_Results(rnd_for_model, x_test, y_test, "Random Forest")
 	display_results(rnd_for_results)
 
