@@ -3,7 +3,7 @@
 from sklearn.linear_model import LogisticRegression
 
 import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, ConfusionMatrixDisplay, recall_score
 
 
 
@@ -55,6 +55,9 @@ class Model_Results:
 		fig.tight_layout()
 
 		plt.show()
+
+	# def get_recall(self, model):
+	# 		return recall_score(model.y_test, model.model_predictions)
 
 	# Calculations
 	def _test_model(self, model, x_test):
