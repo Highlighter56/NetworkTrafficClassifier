@@ -102,7 +102,7 @@ def main():
 
 	# ----- Building Path Variables -----
 	# Base Path
-	path += "../../../models/"
+	path += "/../../models/"
 
 	# Model File Names
 	lr = "log_reg_model.pkl"

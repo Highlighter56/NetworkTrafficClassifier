@@ -6,7 +6,7 @@ import numpy as numpy
 from sklearn.model_selection import train_test_split
 
 
-# 
+# Loads csv files from one folder
 def load_csv_data():
     path = ""
 
@@ -25,7 +25,6 @@ def load_csv_data():
 
 def data_cleaning():
     # Store the loose csv files into list
-
     file_paths = load_csv_data()
 
     # Build a dataframe for each csv file and store in list

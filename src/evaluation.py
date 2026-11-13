@@ -49,3 +49,6 @@ def plot_confusion_matrix_norm(model, features_data, targets_data, title="Confus
     plt.show()
 
     return cm_normalized
+
+# Stratified K-fold Cross Validation Helper Functions
+# Display results of each fold
