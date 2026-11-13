@@ -3,7 +3,7 @@
 import glob
 import pandas as pandas
 
-csv_folder = "../data/loose_csv/*.csv"
+csv_folder = "../data/raw_data/*.csv"
 file_paths = glob.glob(csv_folder)
 
 print(f"Found {len(file_paths)} files")

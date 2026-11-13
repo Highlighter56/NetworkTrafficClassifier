@@ -26,6 +26,7 @@ def main():
 	print("Checking if Cleaned Data Exists")
 
 	# ----- Building Path -----
+	path_data = ""
 	path = ""
 
 	# If Entered too many args
@@ -38,18 +39,18 @@ def main():
 	
 	# If Entered a custom path
 	elif len(sys.argv) == 2:
-		path = sys.argv[1] + "../cleaned_data"
+		path_data = sys.argv[1] + "../cleaned_data"
 	# If no args entered
 	else: 
 		# If running from inside src
 		file_pathsA = glob.glob("../data/raw_data/*.csv")
 		if len(file_pathsA) == 15:
-			path = "../data/cleaned_data"
+			path_data = "../data/cleaned_data"
 		# If running from root
 		else:
-			path = "data/cleaned_data"
+			path_data = "data/cleaned_data"
 
-	cleaned_folder_path = Path(path)
+	cleaned_folder_path = Path(path_data)
 
 
 	# ----- If Cleaned Data Exists -----
@@ -57,10 +58,10 @@ def main():
 
 	if cleaned_folder_path.is_dir():
 		print("Cleaned Data Exists, Loading...")
-		x_train = pd.read_csv(path+"/x_train.csv")
-		x_test = pd.read_csv(path+"/x_test.csv")
-		y_train = pd.read_csv(path+"/y_train.csv")
-		y_test = pd.read_csv(path+"/y_test.csv")
+		x_train = pd.read_csv(path_data+"/x_train.csv")
+		x_test = pd.read_csv(path_data+"/x_test.csv")
+		y_train = pd.read_csv(path_data+"/y_train.csv")
+		y_test = pd.read_csv(path_data+"/y_test.csv")
 
 	# ----- If No Cleaned Data Exists -----
 	else: 
@@ -72,10 +73,10 @@ def main():
 		x_train, x_test, y_train, y_test = data_cleaning()
 
 		# Store DF's as files in cleaned_data
-		x_train.to_csv(path+"/x_train.csv", index=False)
-		x_test.to_csv(path+"/x_test.csv", index=False)
-		y_train.to_csv(path+"/y_train.csv", index=False)
-		y_test.to_csv(path+"/y_test.csv", index=False)
+		x_train.to_csv(path_data+"/x_train.csv", index=False)
+		x_test.to_csv(path_data+"/x_test.csv", index=False)
+		y_train.to_csv(path_data+"/y_train.csv", index=False)
+		y_test.to_csv(path_data+"/y_test.csv", index=False)
 
 	print("Data Loaded")
 
@@ -96,7 +97,7 @@ def main():
 	# Model File Names
 	lr = "log_reg_model.pkl"
 	dt = "dec_tre.pkl"
-	svm = "svm_model.pkl"
+	svm_filename = "svm_model.pkl"
 	rnd_for = "rnd_for_model.pkl"
 
 	# Instantiating model variables
@@ -108,7 +109,7 @@ def main():
 	# --- Load / Train Models ---
 	log_reg_model = load_train_model(x_test_scaled, y_test, path + lr, log_reg)
 	dec_tre_model = load_train_model(x_test, y_test, path + dt, dec_tre)
-	svm_model = load_train_model(x_test_scaled, y_test, path + svm, svm)
+	svm_model = load_train_model(x_test_scaled, y_test, path + svm_filename, svm)
 	rnd_for_model = load_train_model(x_test, y_test, path + rnd_for, random_forest)
 
 	# =========== Model Validation ===========
@@ -130,7 +131,7 @@ def main():
 	display_results(svm_results)
 
 	# ----- Random Forest -----
-	print("\n\n--- PLACE_HOLDER Results ---")
+	print("\n\n--- Random Forest Results ---")
 	rnd_for_results = mr.Model_Results(rnd_for_model, x_test, y_test, "Random Forest")
 	display_results(rnd_for_results)
 
