@@ -6,6 +6,7 @@ import glob
 import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import recall_score
 
 # import data loading/cleaning and model evaluation
 from data_cleaning import data_cleaning
@@ -140,7 +141,7 @@ def main():
 
 def display_results(model):
 	print("Accuracy:",model.get_accuracy())
-	print("Model Report:",model.get_model_report())
+	print("Model Report:\n"+model.get_model_report())
 	model.display_confusion_matrix_data()
 
 def load_train_model(x_train, y_train, path, training_function):
