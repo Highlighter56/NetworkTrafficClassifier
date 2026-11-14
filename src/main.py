@@ -19,6 +19,8 @@ from training_algorithms.dec_tre import dec_tre
 from training_algorithms.svm import svm
 from training_algorithms.random_forest import random_forest
 
+# Import evaluation report displays
+from evaluation import evaluate, evaluate_class_report, plot_confusion_matrix, plot_confusion_matrix_norm
 
 def main():
 
@@ -122,31 +124,120 @@ def main():
 	svm_model = load_train_model(X_train_kbest, y_train, path + svm_path, svm)
 	rnd_for_model = load_train_model(x_train, y_train, path + rnd_for, random_forest)
 
-	# =========== Model Validation ===========
+	# =========== Model Evaluation ===========
+	# Evaluate models
+	print("Evaluating Logistic Regression Classifier...", end=" ", flush=True)
+	train_pred_lr = log_reg_model.predict(x_train_scaled)
+	test_pred_lr = log_reg_model.predict(x_test_scaled)
+	print("done")
+
+	print("Evaluating Decision Tree Classifier...", end=" ", flush=True)
+	train_pred_dt = dec_tre_model.predict(x_train)
+	test_pred_dt = dec_tre_model.predict(x_test)
+	print("done")
+
+	print("Evaluating SVM Classifier...", end=" ", flush=True)
+	train_pred_svm = svm_model.predict(X_train_kbest)
+	test_pred_svm = svm_model.predict(X_test_kbest)
+	print("done")
+
+	print("Evaluating Random Forest Classifier...", end=" ", flush=True)
+	train_pred_rf = rnd_for_model.predict(x_train)
+	test_pred_rf = rnd_for_model.predict(x_test)
+	print("done")
+
 	print("====== Model Results =======")
-
-	# ----- Logistic Regression ---
 	print("\n\n--- Logistic Regression Results ---")
-	log_reg_results = mr.Model_Results(log_reg_model, x_test_scaled, y_test, "Logistic Regression")
-	display_results(log_reg_results)
+	# Metric Reports
+	report_lg = pd.DataFrame({
+		"Training": evaluate(y_train, train_pred_lr),
+		"Testing": evaluate(y_test, test_pred_lr)
+	})
+	print("\nOverall Results:")
+	print(report_lg.round(4))
 
-	# ----- Decission Tree -----
-	print("\n\n--- Decission Tree Results ---")
-	dec_tree_results = mr.Model_Results(dec_tre_model, x_test, y_test, "Decision Tree")
-	display_results(dec_tree_results)
-	
-	# ----- SVM -----
+	# Classification Reports
+	report_class_train_lg = pd.DataFrame(evaluate_class_report(y_train, train_pred_dt)).T
+	report_class_test_lg = pd.DataFrame(evaluate_class_report(y_test, test_pred_dt)).T
+	print("\n Classification Report Training:")
+	print(report_class_train_lg.round(4))
+	print("\n Classification Report Testing:")
+	print(report_class_test_lg.round(4))
+
+	# Confusion Matrices
+	cm_train_lg = plot_confusion_matrix(y_train, train_pred_lr, log_reg_model.classes_, title="Confusion Matrix Logistic Regression (Train)")
+	cm_train_lg_norm = plot_confusion_matrix_norm(y_train, train_pred_lr, log_reg_model.classes_, title="Confusion Matrix Logistic Regression Normalized (Train)")
+	cm_test_lg = plot_confusion_matrix(y_test, test_pred_lr, log_reg_model.classes_, title="Confusion Matrix Logistic Regression (Test)")
+	cm_test_lg_norm = plot_confusion_matrix_norm(y_test, test_pred_lr, log_reg_model.classes_, title="Confusion Matrix Logistic Regression Normalized (Test)")
+
+	print("\n\n--- Decision Tree Results ---")
+	# Metric Reports
+	report_dt = pd.DataFrame({
+		"Training": evaluate(y_train, train_pred_dt),
+		"Testing": evaluate(y_test, test_pred_dt)
+	})
+	print("\nOverall Results:")
+	print(report_dt.round(4))
+
+	# Classification Reports
+	report_class_train_dt = pd.DataFrame(evaluate_class_report(y_train, train_pred_dt)).T
+	report_class_test_dt = pd.DataFrame(evaluate_class_report(y_test, test_pred_dt)).T
+	print("\n Classification Report Training:")
+	print(report_class_train_dt.round(4))
+	print("\n Classification Report Testing:")
+	print(report_class_test_dt.round(4))
+
+	# Confusion Matrices
+	cm_train_dt = plot_confusion_matrix(y_train, train_pred_dt, dec_tre_model.classes_, title="Confusion Matrix Decision Tree (Train)")
+	cm_train_dt_norm = plot_confusion_matrix_norm(y_train, train_pred_dt, dec_tre_model.classes_, title="Confusion Matrix Decision Tree Normalized (Train)")
+	cm_test_dt = plot_confusion_matrix(y_test, test_pred_dt, dec_tre_model.classes_, title="Confusion Matrix Decision Tree (Test)")
+	cm_test_dt_norm = plot_confusion_matrix_norm(y_test, test_pred_dt, dec_tre_model.classes_, title="Confusion Matrix Decision Tree Normalized (Test)")
+
 	print("\n\n--- SVM Results ---")
-	svm_results = mr.Model_Results(svm_model, X_test_kbest, y_test, "SVM")
-	display_results(svm_results)
+	# Metric Reports
+	report_svm = pd.DataFrame({
+		"Training": evaluate(y_train, train_pred_svm),
+		"Testing": evaluate(y_test, test_pred_svm)
+	})
+	print("\nOverall Results:")
+	print(report_svm.round(4))
 
-	# ----- Random Forest -----
+	# Classification Reports
+	report_class_train_svm = pd.DataFrame(evaluate_class_report(y_train, train_pred_svm)).T
+	report_class_test_svm = pd.DataFrame(evaluate_class_report(y_test, test_pred_svm)).T
+	print("\n Classification Report Training:")
+	print(report_class_train_svm.round(4))
+	print("\n Classification Report Testing:")
+	print(report_class_test_svm.round(4))
+
+	# Confusion Matrices
+	cm_train_svm = plot_confusion_matrix(y_train, train_pred_svm, svm_model.classes_, title="Confusion Matrix SVM (Train)")
+	cm_train_svm_norm = plot_confusion_matrix_norm(y_train, train_pred_svm, svm_model.classes_, title="Confusion Matrix SVM Normalized (Train)")
+	cm_test_svm = plot_confusion_matrix(y_test, test_pred_svm, svm_model.classes_, title="Confusion Matrix SVM (Test)")
+	cm_test_svm_norm = plot_confusion_matrix_norm(y_test, test_pred_svm, svm_model.classes_, title="Confusion Matrix SVM Normalized (Test)")
+
 	print("\n\n--- Random Forest Results ---")
-	rnd_for_results = mr.Model_Results(rnd_for_model, x_test, y_test, "Random Forest")
-	display_results(rnd_for_results)
+	# Metric Reports
+	report_rf = pd.DataFrame({
+		"Training": evaluate(y_train, train_pred_rf),
+		"Testing": evaluate(y_test, test_pred_rf)
+	})
+	print("\n Overall Results:")
+	print(report_rf.round(4))
 
+	# Classification Reports
+	report_class_train_rf = pd.DataFrame(evaluate_class_report(y_train, train_pred_rf)).T
+	report_class_test_rf = pd.DataFrame(evaluate_class_report(y_test, test_pred_rf)).T
+	print("\n Classification Report Training:")
+	print(report_class_train_rf.round(4))
+	print("\n Classification Report Testing:")
+	print(report_class_test_rf.round(4))
 
-
+	# Confusion Matrices
+	cm_train_rf = plot_confusion_matrix(y_train, train_pred_rf, rnd_for_model.classes_, title="Confusion Matrix Random Forest (Train)")
+	cm_train_rf_norm = plot_confusion_matrix_norm(y_train, train_pred_rf, rnd_for_model.classes_, title="Confusion Matrix Random Forest (Normalized)")
+	cm_test_rf = plot_confusion_matrix(y_test, test_pred_rf, rnd_for_model.classes_, title="Confusion Matrix Random Forest (Test)")
+	cm_test_rf_norm = plot_confusion_matrix_norm(y_test, test_pred_rf, rnd_for_model.classes_, title="Confusion Matrix Random Forest (Normalized)")
 	print("=========== Done ===========")
 
 def display_results(model):
@@ -165,8 +256,6 @@ def load_train_model(x_train, y_train, path, training_function):
 	print("Model does not Exists")
 	print("Training Model")
 	return training_function(x_train, y_train, path)
-	
-
 
 if __name__ == "__main__":
 	main()

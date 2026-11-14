@@ -21,7 +21,7 @@ def load_csv_data():
 
 
 def sample_or_take_all(group):
-    sample_size = min(len(group), 100)
+    sample_size = min(len(group), 6000)
     return group.sample(n=sample_size, random_state=42)
 
 def data_cleaning():
