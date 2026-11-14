@@ -6,10 +6,10 @@ def random_forest(X_train, y_train, path):
 
     # Build Random Forest Classifier
     random_forest_clf = RandomForestClassifier(
-        n_estimators=400,
+        n_estimators=100,
         max_depth=None,
-        min_samples_split=2,
-        min_samples_leaf=1,
+        min_samples_split=5,
+        min_samples_leaf=2,
         max_features='sqrt',
         class_weight='balanced'
     )
