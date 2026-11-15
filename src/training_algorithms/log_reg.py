@@ -13,8 +13,11 @@ def log_reg(x_train_scaled, y_train, path):
 	print("Training Logistic Regression Model")
 
 	logistic_regression = LogisticRegression(
-			random_state=42,
-			max_iter = 1000
+			max_iter=5000,
+			C = 100,
+			class_weight=None,
+			penalty="l2",
+			solver="lbfgs"
 		)
 	
 	# --- Train Model ---
