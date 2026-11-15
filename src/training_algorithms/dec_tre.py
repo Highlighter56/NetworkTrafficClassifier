@@ -12,15 +12,15 @@ def dec_tre(x_train, y_train, path):
 	# --- Instantiate Model ---
 	print("Training Decission Tree Model")
 
-	# - Parameters to Play With -
-	# max_depth = 20
-	# min_samples_split = 10
-	# criterion = "entropy"
+
+
 	decision_tree = DecisionTreeClassifier(
-			random_state=42,
-			max_depth = 20,
-			min_samples_split = 10,
-			criterion = "entropy"
+			criterion = "gini",
+			max_depth = 40,
+			min_samples_split = 2,
+			min_samples_leaf = 1,
+			max_features = None,
+			class_weight = "balanced"
 		)
 	
 	# --- Train Model ---
