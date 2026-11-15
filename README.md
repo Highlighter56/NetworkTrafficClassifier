@@ -5,24 +5,22 @@ The goal of this project is to train a model that can identify the type of malic
 ### Dataset
 Our Dataset can be Downloaded from: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
 
-### How to Run
+### How to run if model pickle files are missing
+##### This process will train the models first
 This repo contains two machine learning models: SVM found in src/svm.py and Logistic Regression found in src/log_reg.py.
 - Clone the repo
 - Download the dataset: [Kaggle | CIC-BCCC-NRC-TabularIoTAttacks-2024](https://www.kaggle.com/datasets/kabeleswarpe/cic-bccc-nrc-tabulariotattacks-2024?resource=download)
 - *(Optional)* Inside root, create a folder named data, then inside that another named raw_data, and place all csv files there. 
 - If dataset .csv files are in data/raw_data/, run from src:
 ```console
-python log_reg.py
+python main.py
 ```
 ```console
 python svm.py
 ```
 - If dataset is located somewhere else, run from src:
 ```console
-python log_reg.py <location of csv files>
-```
-```console
-python svm.py <location of csv files>
+python main.py <location of csv files>
 ```
 
 ---
@@ -39,7 +37,7 @@ To ensure the data is loaded properly, either:
 * When running the program through terminal, specify the path into the folder where the csv files have been downloaded. 
 * Example: files located in "../data/raw_data/"
 ```bash
-python log_reg.py ../data/raw_data/
+python main.py ../data/raw_data/
 ```
 ### Missing modules in python environment?
 - requirements.txt is located in project root
