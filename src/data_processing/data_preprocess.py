@@ -42,6 +42,10 @@ COLUMNS_TO_DROP = [
     'dst_ip',
     'timestamp'
 ]
+TARGETS_TO_DROP = [
+    'Recon Ping Sweep',
+    'MITM ARP Spoofing'
+]
 
 # Strips leading and trailing whitespace, replaces " " with "_", sets to lowercase
 def format_column_names(dataframe: pd.DataFrame):
@@ -105,6 +109,7 @@ df = (
     .pipe(format_column_names)
     .drop(columns=COLUMNS_TO_DROP)
     .dropna()
+    .loc[lambda df: ~df['attack_name'].isin(TARGETS_TO_DROP)]
     .pipe(sample_or_take_all, 'attack_name', SAMPLE_SIZE)
 )
 
